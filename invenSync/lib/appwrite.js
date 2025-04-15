@@ -1,7 +1,7 @@
-import { Client, Account, ID, Databases } from "react-native-appwrite";
+import { Client, Account, ID, Databases, Query } from "react-native-appwrite";
 
 // Initialize Appwrite client
-const client = new Client()
+export const client = new Client()
   .setEndpoint("https://cloud.appwrite.io/v1")
   .setProject("invensync1")
   .setPlatform('com.ml.invensync');
@@ -12,6 +12,7 @@ const databases = new Databases(client);
 // Appwrite Constants
 const DATABASE_ID = "invensync_db";
 const USERS_COLLECTION_ID = "users_profile";
+const INVENTORY_COLLECTION_ID = "user_inventory"; // New collection for inventory
 
 // Create new user with email and password
 export const createUser = async (email, password, username, profileData = {}) => {
@@ -30,6 +31,12 @@ export const createUser = async (email, password, username, profileData = {}) =>
         : null
     };
 
+    // Format phone number to ensure it has the country code
+    let formattedNumber = profileData.phoneNumber || '';
+    if (formattedNumber && !formattedNumber.startsWith('+')) {
+      formattedNumber = '+91' + formattedNumber.replace(/^0+/, '');
+    }
+
     // Step 1: Create the account in Appwrite Auth first
     const newUser = await account.create(
       ID.unique(),
@@ -46,6 +53,7 @@ export const createUser = async (email, password, username, profileData = {}) =>
       userId: newUser.$id, // Now we have the userId from Auth
       email: email,
       username,
+      phoneNumber: formattedNumber,
       age: processedProfileData.age,
       height: processedProfileData.height,
       weight: processedProfileData.weight,
@@ -61,6 +69,28 @@ export const createUser = async (email, password, username, profileData = {}) =>
       ID.unique(),
       userData
     );
+    
+    // Step 4: Create some initial inventory items (optional)
+    const initialItems = [
+      { name: "Milk", quantity: 1, unit: "gallon", category: "Dairy", expiryDays: 2, status: "good" },
+      { name: "Eggs", quantity: 12, unit: "pcs", category: "Poultry", expiryDays: 14, status: "good" },
+      { name: "Bread", quantity: 1, unit: "loaf", category: "Bakery", expiryDays: 7, status: "good" }
+    ];
+    
+    // Add initial items to inventory
+    for (const item of initialItems) {
+      await databases.createDocument(
+        DATABASE_ID,
+        INVENTORY_COLLECTION_ID,
+        ID.unique(),
+        {
+          userId: newUser.$id,
+          ...item,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }
+      );
+    }
     
     return newUser;
   } catch (error) {
@@ -79,8 +109,7 @@ export const signIn = async (email, password) => {
   }
 };
 
-
-// Get user profile data
+// Get user profile data with improved error handling
 export const getUserProfile = async (userId) => {
   try {
     // Query the database to find the document with the matching userId
@@ -88,8 +117,7 @@ export const getUserProfile = async (userId) => {
       DATABASE_ID,
       USERS_COLLECTION_ID,
       [
-        // Query to find the document where userId equals the provided userId
-        Databases.Query.equal('userId', userId)
+        Query.equal('userId', userId)
       ]
     );
     
@@ -97,13 +125,16 @@ export const getUserProfile = async (userId) => {
       return response.documents[0];
     }
     
-    throw new Error("User profile not found");
+    // Return empty object instead of throwing - this helps with new users
+    return {};
   } catch (error) {
-    throw new Error(error.message || "Failed to fetch user profile");
+    console.error("Error fetching profile:", error);
+    // Return empty object so UI doesn't crash
+    return {};
   }
 };
 
-// Update user profile
+// Update user profile with improved error handling
 export const updateUserProfile = async (userId, profileData) => {
   try {
     // Process numeric values
@@ -127,22 +158,55 @@ export const updateUserProfile = async (userId, profileData) => {
         : null;
     }
     
-    // First get the profile document
-    const profile = await getUserProfile(userId);
-    
-    // Update the profile
-    await databases.updateDocument(
-      DATABASE_ID,
-      USERS_COLLECTION_ID,
-      profile.$id,
-      {
-        ...processedData,
-        updatedAt: new Date().toISOString()
+    // First try to get the profile document
+    try {
+      const profile = await getUserProfile(userId);
+      
+      // If profile exists (has an ID), update it
+      if (profile.$id) {
+        await databases.updateDocument(
+          DATABASE_ID,
+          USERS_COLLECTION_ID,
+          profile.$id,
+          {
+            ...processedData,
+            updatedAt: new Date().toISOString()
+          }
+        );
+      } else {
+        // If no profile exists, create one
+        await databases.createDocument(
+          DATABASE_ID,
+          USERS_COLLECTION_ID,
+          ID.unique(),
+          {
+            userId: userId,
+            ...processedData,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          }
+        );
       }
-    );
-    
-    return true;
+      
+      return true;
+    } catch (error) {
+      // If profile doesn't exist, create a new one
+      await databases.createDocument(
+        DATABASE_ID,
+        USERS_COLLECTION_ID,
+        ID.unique(),
+        {
+          userId: userId,
+          ...processedData,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }
+      );
+      
+      return true;
+    }
   } catch (error) {
+    console.error("Profile update error:", error);
     throw new Error(error.message || "Failed to update user profile");
   }
 };

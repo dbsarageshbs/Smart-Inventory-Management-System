@@ -29,8 +29,6 @@ const App = () => {
     );
   }
 
-  // This is your existing landing page content
-  // It will only show if not redirected and not loading
   return (
     <SafeAreaView className="flex-1 bg-primary h-full">
       <StatusBar style="light" />
@@ -84,12 +82,6 @@ const App = () => {
             icon="restaurant-menu"
             title="Smart Recipe Suggestions"
             description="Creative meals from your inventory."
-          />
-          
-          <FeatureCard 
-            icon="shopping-cart"
-            title="Grocery List"
-            description="Never run out of essentials."
           />
         </View>
 

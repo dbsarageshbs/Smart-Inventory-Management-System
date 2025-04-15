@@ -1,0 +1,74 @@
+Smart-Inventory-Management-System/
+├── README.md                       # Project readme
+├── appStructure.txt                # Project structure documentation
+├── forest-fresh.html
+├── temp.html
+└── invenSync/                      # Main app directory
+    ├── .env                        # Environment variables (gitignored)
+    ├── .gitignore                  # Git ignore configuration
+    ├── app.json                    # Expo app configuration
+    ├── babel.config.js             # Babel configuration
+    ├── global.css                  # Global CSS with Tailwind imports
+    ├── metro.config.js             # Metro bundler configuration
+    ├── package.json                # NPM package configuration
+    ├── tailwind.config.js          # Tailwind CSS configuration
+    ├── .expo/                      # Expo configuration directory
+    │   ├── devices.json
+    │   ├── README.md
+    │   ├── types/
+    │   └── web/
+    ├── app/                        # App routing and screens
+    │   ├── _layout.jsx             # Root layout with font loading and routes
+    │   ├── index.jsx               # Landing page with features
+    │   ├── (auth)/                 # Authentication routes
+    │   │   ├── _layout.jsx         # Auth layout with stack navigation
+    │   │   ├── sign-in.jsx         # Sign in screen
+    │   │   └── sign-up.jsx         # Sign up screen
+    │   └── (tabs)/                 # Main app tabs
+    │       ├── _layout.jsx         # Tab navigation layout
+    │       ├── index.jsx           # Home tab
+    │       ├── inventory.jsx       # Inventory management tab
+    │       ├── Recipe.jsx          # Recipe generator tab
+    │       ├── Settings.jsx        # App settings tab
+    ├── assets/                     # App assets
+    │   ├── adaptive-icon.png
+    │   ├── favicon.png
+    │   ├── icon.png
+    │   ├── logo.jpeg
+    │   ├── splash-1.png
+    │   ├── splash-icon-dark.png
+    │   ├── splash-icon.png
+    │   ├── splash.jpeg
+    │   ├── splash.png
+    │   ├── fonts/                  # Poppins font family
+    │   │   ├── Poppins-Black.ttf
+    │   │   ├── Poppins-Bold.ttf
+    │   │   ├── Poppins-ExtraBold.ttf
+    │   │   ├── Poppins-ExtraLight.ttf
+    │   │   ├── Poppins-Light.ttf
+    │   │   ├── Poppins-Medium.ttf
+    │   │   ├── Poppins-Regular.ttf
+    │   │   ├── Poppins-SemiBold.ttf
+    │   │   └── Poppins-Thin.ttf
+    │   ├── icons/                  # App icons
+    │   └── images/                 # App images
+    ├── components/                 # Reusable components
+    │   ├── CustomButton.jsx        # Custom button component
+    │   ├── FeatureCard.jsx         # Feature card component
+    │   ├── FormField.jsx           # Form field component
+    │   └── index.js                # Components barrel file
+    │   └── ProductScanner.jsx      # Component to scan prodcut
+    │   └── RecipeCard.jsx          # Component for recipe card
+    │   └── SavedRecipes.jsx        # Component to show saved Recipes
+    ├── constants/                  # App constants
+    │   ├── icons.js                # Icons imports and exports
+    │   ├── images.js               # Images imports and exports
+    │   └── index.js                # Constants barrel file
+    ├── context/                    # React context providers
+    │   └── GlobalProvider.js       # Global state management
+    └── lib/                        # Utility libraries
+        ├── appwrite.js             # Appwrite backend integration
+        ├── chef.js                 # Recipe generation service
+        ├── imageProcessing.js      # Image processing utilities
+        ├── inventoryService.js     # Inventory management service
+        └── recipeStore.js          # Recipe state management store

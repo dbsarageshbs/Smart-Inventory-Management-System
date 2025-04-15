@@ -32,7 +32,8 @@ const SignUp = () => {
     age: "",
     height: "",
     weight: "",
-    healthConditions: ""
+    healthConditions: "",
+    phoneNumber: ""
   });
 
   useEffect(() => {
@@ -96,6 +97,11 @@ const SignUp = () => {
       return;
     }
 
+    if (form.phoneNumber != "" && form.phoneNumber.length < 10) {
+      Alert.alert("Invalid Phone Number", "Please enter a valid 10-digit phone number");
+      return;
+    }
+
     setSubmitting(true);
     try {
       const result = await createUser(
@@ -106,7 +112,8 @@ const SignUp = () => {
           age: form.age,
           height: form.height,
           weight: form.weight,
-          healthConditions: form.healthConditions
+          healthConditions: form.healthConditions,
+          phoneNumber: form.phoneNumber
         }
       );
       setUser(result);
@@ -179,6 +186,18 @@ const SignUp = () => {
                     handleChangeText={(e) => setForm({ ...form, password: e })}
                     otherStyles="mb-6"
                     placeholder="Create a strong password"
+                  />
+
+                  <FormField
+                    title="Phone Number"
+                    value={form.phoneNumber}
+                    handleChangeText={(e) => {
+                      const digitsOnly = e.replace(/\D/g, '');
+                      setForm({ ...form, phoneNumber: digitsOnly });
+                    }}
+                    otherStyles="mb-4"
+                    keyboardType="numeric"
+                    placeholder="Enter your phone number"
                   />
 
                   <CustomButton

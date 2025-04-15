@@ -6,7 +6,7 @@ import GlobalProvider, { useGlobalContext } from '../context/GlobalProvider';
 
 // Route guard to handle authentication redirects
 const RouteGuard = ({ children }) => {
-  const { isLogged, loading } = useGlobalContext();
+  const {isLogged, loading } = useGlobalContext();
   const pathname = usePathname(); // Use this hook instead of router.pathname
 
   useEffect(() => {

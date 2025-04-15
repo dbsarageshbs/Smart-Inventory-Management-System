@@ -9,6 +9,7 @@ const FormField = ({
   placeholder,
   handleChangeText,
   otherStyles,
+  keyboardType,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,6 +29,7 @@ const FormField = ({
           secureTextEntry={title === "Password" && !showPassword}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          keyboardType={keyboardType}
           {...props}
         />
 

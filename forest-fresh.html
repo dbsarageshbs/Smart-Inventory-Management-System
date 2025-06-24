@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvenSync Forest Fresh Color Scheme</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .color-box {
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .color-box:hover {
+            transform: scale(1.05);
+        }
+        .color-box span {
+            display: block;
+            margin: 5px 0;
+            font-size: 14px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        /* Adjust text color for readability on lighter backgrounds */
+        .light-bg {
+            color: #0F1C20;
+            text-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Primary -->
+        <div class="color-box" style="background-color: #1A2E35;">
+            <span>Primary</span>
+            <span>#1A2E35</span>
+            <span>Deep Teal</span>
+        </div>
+
+        <!-- Secondary -->
+        <div class="color-box" style="background-color: #A8D5BA;">
+            <span>Secondary DEFAULT</span>
+            <span>#A8D5BA</span>
+            <span class="light-bg">Soft Mint Green</span>
+        </div>
+        <div class="color-box" style="background-color: #92C9A6;">
+            <span>Secondary 100</span>
+            <span>#92C9A6</span>
+            <span class="light-bg">Slightly Deeper Green</span>
+        </div>
+        <div class="color-box" style="background-color: #7DB992;">
+            <span>Secondary 200</span>
+            <span>#7DB992</span>
+            <span class="light-bg">Richer Green</span>
+        </div>
+
+        <!-- Black -->
+        <div class="color-box" style="background-color: #0F1C20;">
+            <span>Black DEFAULT</span>
+            <span>#0F1C20</span>
+            <span>Near-Black</span>
+        </div>
+        <div class="color-box" style="background-color: #2A3B41;">
+            <span>Black 100</span>
+            <span>#2A3B41</span>
+            <span>Dark Teal-Gray</span>
+        </div>
+        <div class="color-box" style="background-color: #3E5359;">
+            <span>Black 200</span>
+            <span>#3E5359</span>
+            <span>Mid-Tone</span>
+        </div>
+
+        <!-- Gray -->
+        <div class="color-box" style="background-color: #D9E2E3;">
+            <span>Gray 100</span>
+            <span>#D9E2E3</span>
+            <span class="light-bg">Light Airy Gray</span>
+        </div>
+    </div>
+</body>
+</html>

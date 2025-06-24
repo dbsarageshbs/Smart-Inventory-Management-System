@@ -12,7 +12,11 @@
       "distribution": "internal",
       "android": {
         "gradleCommand": ":app:assembleRelease",
-        "buildType": "apk"
+        "buildType": "apk",
+        "image": "ubuntu-22.04-jdk-17-ndk-r26b",
+        "env": {
+          "GRADLE_OPTS": "-Dorg.gradle.jvmargs=-Xmx2048m"
+        }
       }
     },
     "production": {

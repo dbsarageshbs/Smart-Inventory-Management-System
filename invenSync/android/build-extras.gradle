@@ -1,0 +1,12 @@
+// Fixes compatibility issues with Gradle and newer Expo modules
+afterEvaluate {
+    publishing {
+        publications {
+            if (publications.findByName('release')) {
+                release.apply {
+                    from(components.findByName('release'))
+                }
+            }
+        }
+    }
+}

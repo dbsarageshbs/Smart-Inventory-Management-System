@@ -1,0 +1,12 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Clean and Rebuild Project",
+      "command": "cd invenSync && npm cache clean --force && if exist node_modules rmdir /s /q node_modules && npm install && npx expo prebuild -p android --clean",
+      "type": "shell",
+      "isBackground": false,
+      "problemMatcher": []
+    }
+  ]
+}

@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.rag795.invenSync"
     },
     "web": {
       "bundler": "metro",
@@ -27,7 +28,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/splash-icon-dark.png",
+          "image": "./assets/splash.png",
           "resizeMode": "cover",
           "backgroundColor": "#011023",
           "enableFullScreenImage_legacy": true
@@ -36,6 +37,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "c3cdd53d-19cd-49a1-8bc7-0238bc50de94"
+      }
     }
   }
 }

@@ -2,7 +2,7 @@ import { Groq } from 'groq-sdk';
 
 // // Initialize Groq client
 const API_KEY = process.env.EXPO_PUBLIC_GROQ_KEY; // Replace with your actual API key or use environment variables
-const groq = new Groq({ apiKey: API_KEY });
+const groq = new Groq({ apiKey: API_KEY});
 
 /**
  * Process product images using Groq API to extract product information
